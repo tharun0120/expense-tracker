@@ -1,7 +1,9 @@
-from flask import Flask, render_template, redirect, session
+from flask import Flask, redirect, session
 from flask_session import Session
 
-from routes.users import userBp
+from routes.users import userBp as user_blueprint
+from routes.wallets import wallet_blueprint
+from routes.expenses import expenses_blueprint
 
 from dotenv import load_dotenv
 
@@ -15,21 +17,23 @@ app.config["SESSION_TYPE"] = "filesystem"
 
 Session(app)
 
-app.register_blueprint(userBp)
+app.register_blueprint(user_blueprint)
+app.register_blueprint(wallet_blueprint)
+app.register_blueprint(expenses_blueprint)
 
 
 @app.route("/")
 def index():
     if session.get("active") == None:
-        return render_template("index.html")
+        return {"success": True}
     else:
-        return redirect("/dash")
+        return {"success": False}
 
 
-@app.route("/logout")
+@app.route("/api/logout")
 def logout():
     session.clear()
-    return redirect("/")
+    return {"success": True}
 
 
 if __name__ == '__main__':

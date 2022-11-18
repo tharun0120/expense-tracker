@@ -4,32 +4,28 @@ from modules.user import User
 userBp = Blueprint('userBp', __name__)
 
 
-@userBp.route('/signup', methods=['POST'])
+@userBp.route('/api/register', methods=['POST'])
 def signup():
-    if session.get('active') == None:
-        if User().register(request.form):
-            return {
-                'success': "true",
-            }
-        else:
-            return {
-                'status': "failed"
-            }
+    if User().register(request.form):
+        user = User().getUser("name", request.form['username'])
+        return {
+            "success": True,
+            "message": "User registered successfully",
+            "data": {"user": {"id": user[0], "name": user[1], "email": user[2]}}
+        }
+    else:
+        return {"success": False, "message": "Validations Failed"}
+
+
+@userBp.route('/api/login', methods=['POST'])
+def login():
+    if User().login(request.form):
+        user = User().getUser("name", request.form['username'])
+        return {"success": True, "message": "Login Successfull",
+                "data": {"user": {"id": user[0], "name": user[1], "email": user[2]}}
+                }
     else:
         return {
-            'status': "failed",
-            "message": "Unauthorized"
+            'success': False,
+            "message": "Invalid Credentials"
         }
-
-
-@userBp.route('/login', methods=['POST'])
-def login():
-    if session.get('active') == None:
-        if User().login(request.form):
-            return {
-                'status': "success"
-            }
-        else:
-            return {
-                'status': "failed"
-            }

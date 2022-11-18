@@ -24,8 +24,8 @@ class Db:
 
     def execute(self, query: str) -> bool:
         try:
-            stmt = ibm_db.exec_immediate(self.conn, query)
-            return ibm_db.fetch_tuple(stmt)
+            ibm_db.exec_immediate(self.conn, query)
+            return True
         except:
             print("SQLSTATE = {}".format(ibm_db.stmt_error()))
             return False
@@ -58,10 +58,11 @@ class Db:
         print(query)
         return self.execute(query)
 
-    def insert(self, table_name: str, values: list) -> bool:
+    def insert(self, table_name: str, values: list, columns: list) -> bool:
         try:
+            columnsup = ','.join("{0}".format(x) for x in columns)
             valuestup = ','.join("'{0}'".format(x) for x in values)
-            query = f'INSERT INTO {table_name} VALUES ({valuestup})'
+            query = f'INSERT INTO {table_name} ({columnsup}) VALUES ({valuestup})'
             print(query)
             return self.execute(query)
         except Exception as e:
