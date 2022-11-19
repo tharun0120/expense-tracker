@@ -37,3 +37,17 @@ def get_all(user_id):
         }
     else:
         return {"success": False, "message": "Invalid User"}
+
+
+@expenses_blueprint.route('/api/expenses/category/<user_id>', methods=['GET'])
+def get_category(user_id):
+    user = User().getUser("id", user_id)
+    if user:
+        expenses = Expenses().expense_category(user_id)
+        return {
+            "success": True,
+            "message": "Expense fetched successfully",
+            "data": {"expenses": expenses}
+        }
+    else:
+        return {"success": False, "message": "Invalid User"}

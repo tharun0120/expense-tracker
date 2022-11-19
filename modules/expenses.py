@@ -26,3 +26,6 @@ class Expenses(Db):
 
     def get_all(self, user_id):
         return self.getall("expenses", "user_id = " + user_id)
+
+    def expense_category(self, id):
+        return self.getall("expenses", "user_id = " + id + " GROUP BY category", "category, Count(user_id)")
