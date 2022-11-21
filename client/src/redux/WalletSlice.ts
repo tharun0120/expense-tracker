@@ -8,6 +8,7 @@ let INIT_STATE: WalletType = {
   user_id: 0,
   amount: 0,
   threshold: 0,
+  loading: false,
 };
 
 export const fetchWallet = createAsyncThunk(
@@ -53,14 +54,19 @@ const walletSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchWallet.pending, (state) => {})
+      .addCase(fetchWallet.pending, (state) => {
+        state.loading = true;
+      })
       .addCase(fetchWallet.fulfilled, (state, action: any) => {
         state.id = action.payload.data.wallet.id;
         state.user_id = action.payload.data.wallet.user_id;
         state.amount = action.payload.data.wallet.amount;
         state.threshold = action.payload.data.wallet.threshold;
+        state.loading = false;
       })
-      .addCase(fetchWallet.rejected, (state, action: any) => {})
+      .addCase(fetchWallet.rejected, (state, action: any) => {
+        state.loading = false;
+      })
       .addCase(createWallet.pending, (state) => {})
       .addCase(createWallet.fulfilled, (state, action: any) => {
         state.id = action.payload.data.wallet.id;
@@ -72,9 +78,15 @@ const walletSlice = createSlice({
       .addCase(createWallet.rejected, (state, action: any) => {
         toast.error(action.payload.message);
       })
-      .addCase(updateThreshold.pending, (state) => {})
-      .addCase(updateThreshold.fulfilled, (state, action: any) => {})
-      .addCase(updateThreshold.rejected, (state, action: any) => {});
+      .addCase(updateThreshold.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateThreshold.fulfilled, (state, action: any) => {
+        state.loading = false;
+      })
+      .addCase(updateThreshold.rejected, (state, action: any) => {
+        state.loading = false;
+      });
   },
 });
 

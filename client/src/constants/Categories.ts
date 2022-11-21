@@ -7,7 +7,7 @@ export const CATEGORIES: any = {
   Utilites: {
     title: "Utilites",
     value: 0,
-    color: "#2B0B3F",
+    color: "#FFC154",
   },
   Clothes: {
     title: "Clothes",
@@ -27,11 +27,11 @@ export const CATEGORIES: any = {
   Personal: {
     title: "Personal",
     value: 0,
-    color: "#F7B7A3",
+    color: "#EC6B56",
   },
   Other: {
     title: "Other",
     value: 0,
-    color: "##FFF1C9",
+    color: "#47B39C",
   },
 };

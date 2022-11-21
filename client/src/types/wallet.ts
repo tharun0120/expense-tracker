@@ -3,4 +3,5 @@ export interface WalletType {
   user_id: number;
   amount: number;
   threshold: number;
+  loading?: boolean;
 }

@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from ".";
 import {
   addExpense,
@@ -16,8 +17,10 @@ const useExpenses = () => {
     dispatch(fetchExpenses(id));
   };
 
-  const add = (body: ExpenseType) => {
-    dispatch(addExpense(body));
+  const add = async (body: ExpenseType) => {
+    await dispatch(addExpense(body)).then((data: any) => {
+      if (data.payload) toast.success(data.payload.message);
+    });
   };
 
   const fetchCategories = (id: number) => {

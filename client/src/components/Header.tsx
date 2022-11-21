@@ -24,7 +24,10 @@ const Header = () => {
           Welcome {user.name}!
         </span>
         <div className="flex items-center gap-4">
-          <FaWallet className="text-4xl cursor-pointer hover:opacity-75" />
+          <FaWallet
+            className="text-4xl cursor-pointer hover:opacity-75"
+            onClick={() => views.toggleModal(VIEWS.WALLETMODAL)}
+          />
           <FiLogOut
             className="text-4xl cursor-pointer hover:opacity-75"
             onClick={() => logout()}

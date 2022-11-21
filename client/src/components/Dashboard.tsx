@@ -9,6 +9,7 @@ import { useAuth, useExpenses, useViews, useWallet } from "../hooks";
 import CreateWalletModal from "./CreateWalletModal";
 import { VIEWS } from "../constants/Views";
 import Loader from "./common/Loader";
+import UpdateWalletModal from "./UpdateWalletModal";
 
 const Dashboard = () => {
   const auth = useAuth();
@@ -27,15 +28,19 @@ const Dashboard = () => {
       <section className="w-full px-40 flex items-start justify-between">
         <section className="w-1/3 flex flex-col gap-10">
           <Card title="Remaining Limit">
-            <div className="flex items-center mb-4 gap-1">
-              <FaRupeeSign className="text-2xl" />
-              <span
-                className={`text-4xl ${
-                  wallet.limit > 0 ? "text-accent" : "text-red-600"
-                } `}>
-                {wallet.limit}
-              </span>
-            </div>
+            {wallet.loading ? (
+              <Loader />
+            ) : (
+              <div className="flex items-center mb-4 gap-1">
+                <FaRupeeSign className="text-2xl" />
+                <span
+                  className={`text-4xl ${
+                    wallet.limit > 0 ? "text-accent" : "text-red-600"
+                  } `}>
+                  {wallet.limit}
+                </span>
+              </div>
+            )}
           </Card>
           <Card title="Category">
             {expenses.category_loading ? (
@@ -64,27 +69,36 @@ const Dashboard = () => {
             )}
           </Card>
           <Card title="Most Spent">
-            <div className="flex items-center mb-4 gap-1">
-              <FaRupeeSign className="text-2xl" />
-              <span className="text-4xl text-accent">
-                {expenses.most_spent}
-              </span>
-            </div>
+            {expenses.expenses_loading ? (
+              <Loader />
+            ) : (
+              <div className="flex items-center mb-4 gap-1">
+                <FaRupeeSign className="text-2xl" />
+                <span className="text-4xl text-accent">
+                  {expenses.most_spent}
+                </span>
+              </div>
+            )}
           </Card>
           <Card title="Total Spent">
-            <div className="flex items-center mb-4 gap-1">
-              <FaRupeeSign className="text-2xl" />
-              <span className="text-4xl text-accent">
-                {expenses.total_spent}
-              </span>
-            </div>
+            {expenses.expenses_loading ? (
+              <Loader />
+            ) : (
+              <div className="flex items-center mb-4 gap-1">
+                <FaRupeeSign className="text-2xl" />
+                <span className="text-4xl text-accent">
+                  {expenses.total_spent}
+                </span>
+              </div>
+            )}
           </Card>
         </section>
-        <section className="w-2/3 flex flex-col gap-20 items-center pl-20">
+        <section className="w-2/3 flex flex-col gap-10 items-center pl-20">
           <AddExpenses />
           {expenses.expenses_loading ? <Loader /> : <ListExpenses />}
         </section>
         {views.modal === VIEWS.CREATEWALLETMODAL && <CreateWalletModal />}
+        {views.modal === VIEWS.WALLETMODAL && <UpdateWalletModal />}
       </section>
     </Container>
   );

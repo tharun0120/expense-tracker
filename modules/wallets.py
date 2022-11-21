@@ -28,8 +28,10 @@ class Wallets(Db):
 
     def update_threshold(self, form):
         try:
+            print(form)
             query = "update wallets set threshold = " + \
                 str(form["threshold"]) + \
+                ", amount =" + str(form["amount"]) + \
                 " where user_id = " + str(form["user_id"])
             print(query)
             return self.execute(query)

@@ -5,6 +5,7 @@ import {
   createWallet,
   fetchWallet,
   selectWalletState,
+  updateThreshold,
 } from "../redux/WalletSlice";
 import { WalletType } from "../types/wallet";
 
@@ -33,11 +34,26 @@ const useWallet = () => {
     });
   };
 
+  const update = async (body: WalletType) => {
+    dispatch(updateThreshold(body)).then((data: any) => {
+      if (data.payload) {
+        toast.success(data.payload.message);
+        views.goTo(views.from);
+        views.toggleModal(VIEWS.LOADING);
+        get(body.user_id);
+      } else {
+        toast.error(data.error.message);
+      }
+    });
+  };
+
   return {
     amount: wallet.amount,
     limit: wallet.threshold,
     get,
     create,
+    update,
+    loading: wallet.loading,
   };
 };
 

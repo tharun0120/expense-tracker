@@ -27,7 +27,7 @@ const SelectInput = ({
         setter={setter}
         value={value}
         valueMap={valueMap}
-        styles={`text-secondary px-5 py-3 text-lg font-medium focus:outline-none border-[0.75px] border-border bg-background ${styles}`}
+        styles={`text-secondary px-5 py-3 text-lg font-medium focus:outline-none border-[0.75px] border-border bg-background w-full ${styles}`}
       />
     </section>
   );

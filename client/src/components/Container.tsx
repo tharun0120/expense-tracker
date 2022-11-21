@@ -10,7 +10,7 @@ function Container({ children }: Props) {
   return (
     <div className="w-full min-h-screen flex flex-col gap-10 items-center">
       <Header />
-      <main className="w-full">{children}</main>
+      <main className="w-full pb-10">{children}</main>
     </div>
   );
 }

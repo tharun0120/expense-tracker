@@ -21,9 +21,7 @@ const SelectInputBox = ({
       <div className="relative w-full">
         <Listbox.Button
           className={`flex items-center justify-between ${styles}`}>
-          <span className="flex flex-start text-secondary">
-            {value?.placeholder}
-          </span>
+          <span className="flex flex-start text-secondary">{value?.title}</span>
           <HiSelector className="h-5 w-5 text-accent" aria-hidden="true" />
         </Listbox.Button>
         <Transition
@@ -32,7 +30,7 @@ const SelectInputBox = ({
           leaveFrom="opacity-100"
           leaveTo="opacity-0">
           <Listbox.Options
-            className={`z-50  w-full absolute bg-background border-t-0 focus:outline-none border-[0.75px] border-border`}>
+            className={`z-50  w-full absolute bg-background border-t-0 focus:outline-none border-[0.75px] pb-2 border-border`}>
             {valueMap.map((value: any, idx: any) => (
               <Listbox.Option
                 key={idx}
@@ -48,7 +46,7 @@ const SelectInputBox = ({
                       className={`block truncate text-start ${
                         selected ? "font-medium" : "font-normal"
                       }`}>
-                      {value.placeholder}
+                      {value.title}
                     </span>
                     {selected ? (
                       <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-accent">
