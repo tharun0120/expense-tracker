@@ -6,10 +6,10 @@ wallet_blueprint = Blueprint('wallet_blueprint', __name__)
 
 @wallet_blueprint.route('/api/wallet', methods=['POST'])
 def add():
-    wallet = Wallets().getWallet(request.form["user_id"])
+    wallet = Wallets().getWallet(request.json["user_id"])
     if not wallet:
-        Wallets().add(request.form)
-        wallet = Wallets().getWallet(request.form["user_id"])
+        Wallets().add(request.json)
+        wallet = Wallets().getWallet(request.json["user_id"])
         return {
             "success": True,
             "message": "Wallet added successfully",
@@ -34,17 +34,17 @@ def get(user_id):
         }
     else:
         return {
-            "success": True,
+            "success": False,
             "message": "No wallet found.",
         }
 
 
 @wallet_blueprint.route('/api/wallet/', methods=['PATCH'])
 def update():
-    wallet = Wallets().getWallet(request.form["user_id"])
+    wallet = Wallets().getWallet(request.json["user_id"])
     if wallet:
-        Wallets().update_threshold(request.form)
-        updated_wallet = Wallets().getWallet(request.form["user_id"])
+        Wallets().update_threshold(request.json)
+        updated_wallet = Wallets().getWallet(request.json["user_id"])
         return {
             "success": True,
             "message": "Threshold updated successfully",
@@ -52,6 +52,6 @@ def update():
         }
     else:
         return {
-            "success": True,
+            "success": False,
             "message": "No wallet found.",
         }

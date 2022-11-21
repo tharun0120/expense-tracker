@@ -8,13 +8,13 @@ expenses_blueprint = Blueprint('expenses_blueprint', __name__)
 
 @expenses_blueprint.route('/api/expenses', methods=['POST'])
 def add():
-    user = User().getUser("id", request.form['user_id'])
+    user = User().getUser("id", request.json['user_id'])
     if user:
-        wallet = Wallets().getWallet(request.form["user_id"])
+        wallet = Wallets().getWallet(request.json["user_id"])
         Wallets().update_threshold(
-            {"user_id": request.form["user_id"], "threshold": str(int(wallet[2]) - int(request.form["amount"]))})
-        Expenses().add(request.form)
-        expense = Expenses().get_expense(request.form)
+            {"user_id": request.json["user_id"], "threshold": str(int(wallet[2]) - int(request.json["amount"]))})
+        Expenses().add(request.json)
+        expense = Expenses().get_expense(request.json)
         print(expense)
         return {
             "success": True,

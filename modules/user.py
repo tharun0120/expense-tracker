@@ -18,7 +18,7 @@ class User(Db):
 
     def login(self, form):
         try:
-            data = self.get("users", f"username='{form['username']}'")
+            data = self.get("users", f"email='{form['email']}'")
             if len(data) != 0:
                 if check_password_hash(data[3], form["password"]):
                     session["active"] = data[1]

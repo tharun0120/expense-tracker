@@ -1,5 +1,6 @@
-from flask import Flask, redirect, session
+from flask import Flask, session
 from flask_session import Session
+from flask_cors import CORS, cross_origin
 
 from routes.users import userBp as user_blueprint
 from routes.wallets import wallet_blueprint
@@ -17,12 +18,15 @@ app.config["SESSION_TYPE"] = "filesystem"
 
 Session(app)
 
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
+
 app.register_blueprint(user_blueprint)
 app.register_blueprint(wallet_blueprint)
 app.register_blueprint(expenses_blueprint)
 
 
-@app.route("/")
+@app.route("/api/session")
 def index():
     if session.get("active") == None:
         return {"success": True}
@@ -33,7 +37,7 @@ def index():
 @app.route("/api/logout")
 def logout():
     session.clear()
-    return {"success": True}
+    return {"success": True, "message": "Logged out successfully"}
 
 
 if __name__ == '__main__':
